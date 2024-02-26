@@ -5,7 +5,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import ApiPixaby from './components/pixaby-api';
 import { refs } from './components/refs';
 import menuSticky from './components/Sticky';
-import createMarkup from './components/createMarkup';
 
 const obsOptions = {
   root: null,
@@ -28,6 +27,7 @@ refs.searchForm.addEventListener('submit', onFormSubmit);
 window.addEventListener('scroll', menuSticky);
 
 // submit function
+
 function onFormSubmit(evt) {
   evt.preventDefault();
 
@@ -47,6 +47,7 @@ function onFormSubmit(evt) {
 }
 
 // fetch posts function
+
 function getPosts() {
   apiPixaby
     .fechPosts()
@@ -75,46 +76,46 @@ function getPosts() {
 
 // render markup function
 
-// function createMarkup(data) {
-//   let markup = data
-//     .map(
-//       ({
-//         tags,
-//         webformatURL,
-//         largeImageURL,
-//         downloads,
-//         comments,
-//         views,
-//         likes,
-//       }) => {
-//         return `<div class="gallery-wpapper">
-//         <a class = 'gallery__item' href="${largeImageURL}" >
-//         <div class="photo-card">
-//   <img src="${webformatURL}" alt="${tags}"  loading="lazy" />
-//   <div class="info">
-//     <p class="info-item">
-//       <b>Likes</b>${likes}
-//     </p>
-//     <p class="info-item">
-//       <b>Views</b>${views}
-//     </p>
-//     <p class="info-item">
-//       <b>Comments</b>${comments}
-//     </p>
-//     <p class="info-item">
-//       <b>Downloads</b>${downloads}
-//     </p>
-//   </div>
-// </div>
-//           </a>
-// </div>`;
-//       }
-//     )
-//     .join('');
+function createMarkup(data) {
+  let markup = data
+    .map(
+      ({
+        tags,
+        webformatURL,
+        largeImageURL,
+        downloads,
+        comments,
+        views,
+        likes,
+      }) => {
+        return `<div class="gallery-wpapper">
+        <a class = 'gallery__item' href="${largeImageURL}" >
+        <div class="photo-card">
+  <img src="${webformatURL}" alt="${tags}"  loading="lazy" />
+  <div class="info">
+    <p class="info-item">
+      <b>Likes</b>${likes}
+    </p>
+    <p class="info-item">
+      <b>Views</b>${views}
+    </p>
+    <p class="info-item">
+      <b>Comments</b>${comments}
+    </p>
+    <p class="info-item">
+      <b>Downloads</b>${downloads}
+    </p>
+  </div>
+</div>
+          </a>
+</div>`;
+      }
+    )
+    .join('');
 
-//   refs.gallery.insertAdjacentHTML('beforeend', markup);
-//   lightbox.refresh();
-// }
+  refs.gallery.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
+}
 
 // clear gallery function
 
@@ -122,10 +123,11 @@ function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
+// loadmore function
+
 function onInfinitLoad(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // apiPixaby.incrementPage();
       getPosts();
       observer.unobserve(refs.target);
     }
