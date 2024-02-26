@@ -7,21 +7,23 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="wrapper">
-      <form class="search-form" type="submit" id="search-form">
-        <input
-          type="text"
-          name="searchQuery"
-          autocomplete="off"
-          placeholder="Search images..."
-        />
-        <button class="button" type="submit">Search</button>
-      </form>
+    <div class="container">
+      <div class="wrapper">
+        <form class="search-form" type="submit" id="search-form">
+          <input
+            type="text"
+            name="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+          <button class="button" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="gallery">
+        <!-- Картки зображень -->
+      </div>
+      <div class="js-guard"></div>
     </div>
-    <div class="gallery">
-      <!-- Картки зображень -->
-    </div>
-    <div class="js-guard"></div>
 
     <script type="module" src="./index.js"></script>
   </body>

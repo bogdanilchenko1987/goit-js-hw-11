@@ -3,13 +3,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import ApiPixaby from './components/pixaby-api';
-
-// DOM elements
-const refs = {
-  searchForm: document.querySelector('.search-form'),
-  gallery: document.querySelector('.gallery'),
-  target: document.querySelector('.js-guard'),
-};
+import { refs } from './components/refs';
+import menuSticky from './components/Sticky';
 
 const obsOptions = {
   root: null,
@@ -27,7 +22,9 @@ const lightbox = new SimpleLightbox('.gallery__item', {
   enableKeyboard: true,
 });
 
+// event listeners
 refs.searchForm.addEventListener('submit', onFormSubmit);
+window.addEventListener('scroll', menuSticky);
 
 // submit function
 function onFormSubmit(evt) {
@@ -47,6 +44,7 @@ function onFormSubmit(evt) {
     });
   }
 }
+
 // fetch posts function
 function getPosts() {
   apiPixaby
@@ -54,16 +52,6 @@ function getPosts() {
     .then(data => {
       const currentPage = apiPixaby.page - 1;
       apiPixaby.hits = data.totalHits;
-      console.log(data.totalHits);
-      // if (!data.totalHits) {
-      //   return Notify.failure('No images found. Try again', {
-      //     position: 'right-top',
-      //     timeout: 1500,
-      //   });
-      // }
-      // if (!data.hits.length) {
-      //   return;
-      // }
 
       createMarkup(data.hits);
       observer.observe(refs.target);
@@ -97,7 +85,8 @@ function createMarkup(data) {
         views,
         likes,
       }) => {
-        return `<a class = 'gallery__item' href="${largeImageURL}" >
+        return `<div class="gallery-wpapper">
+        <a class = 'gallery__item' href="${largeImageURL}" >
         <div class="photo-card">
   <img src="${webformatURL}" alt="${tags}"  loading="lazy" />
   <div class="info">
@@ -115,7 +104,8 @@ function createMarkup(data) {
     </p>
   </div>
 </div>
-</a>`;
+          </a>
+</div>`;
       }
     )
     .join('');
