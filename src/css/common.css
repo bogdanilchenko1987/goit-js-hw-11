@@ -1,0 +1,70 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.info {
+  width: 348px;
+  display: flex;
+  border: 1px solid #eeeeee;
+  border-top: none;
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.info-item b {
+  margin-bottom: 5px;
+}
+
+.gallery {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+}
+
+.photo-card {
+  width: 360px;
+  height: 270px;
+}
+img {
+  display: block;
+  width: 350px;
+  height: 200px;
+}
+
+.search-form {
+  text-align: center;
+  padding-top: 15px;
+}
+
+.button {
+  height: 28px;
+  border-radius: 3px;
+}
+.wrapper {
+  display: block;
+  height: 60px;
+  background-color: rgb(52, 52, 212);
+}
+
+input[type='text'] {
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -khtml-border-radius: 3px;
+
+  height: 24px;
+  width: 120px;
+}
