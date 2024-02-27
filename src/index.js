@@ -8,7 +8,7 @@ import menuSticky from './components/Sticky';
 
 const obsOptions = {
   root: null,
-  rootMargin: '200px',
+  rootMargin: '10px',
   threshold: 1.0,
 };
 
