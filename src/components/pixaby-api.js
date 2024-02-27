@@ -26,7 +26,7 @@ export default class ApiPixaby {
       this.incrementPage();
       return resp.data;
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   }
 

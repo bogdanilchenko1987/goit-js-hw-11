@@ -8,7 +8,7 @@ import menuSticky from './components/Sticky';
 
 const obsOptions = {
   root: null,
-  rootMargin: '300px',
+  rootMargin: '200px',
   threshold: 1.0,
 };
 
@@ -37,7 +37,8 @@ function onFormSubmit(evt) {
     apiPixaby.resetPage();
 
     clearGallery();
-    getPosts();
+    // getPosts();
+    getPostsAsync();
   } else {
     Notify.failure('Input is empty', {
       position: 'right-top',
@@ -48,30 +49,65 @@ function onFormSubmit(evt) {
 
 // fetch posts function
 
-function getPosts() {
-  apiPixaby
-    .fechPosts()
-    .then(data => {
-      const currentPage = apiPixaby.page - 1;
-      apiPixaby.hits = data.totalHits;
+// function getPosts() {
+//   apiPixaby
+//     .fechPosts()
+//     .then(data => {
+//       const currentPage = apiPixaby.page - 1;
+//       apiPixaby.hits = data.totalHits;
 
-      createMarkup(data.hits);
-      observer.observe(refs.target);
+//       createMarkup(data.hits);
+//       observer.observe(refs.target);
 
-      if (currentPage === 1) {
-        if (!data.totalHits) {
-          return Notify.failure('No images found. Try again', {
-            position: 'right-top',
-            timeout: 1500,
-          });
-        }
-        Notify.success(`Hooray! We found ${apiPixaby.hits} images.`, {
+//       if (currentPage === 1) {
+//         if (!data.totalHits) {
+//           return Notify.failure('No images found. Try again', {
+//             position: 'right-top',
+//             timeout: 1500,
+//           });
+//         }
+//         Notify.success(`Hooray! We found ${apiPixaby.hits} images.`, {
+//           position: 'right-top',
+//           timeout: 1000,
+//         });
+//       }
+//     })
+//     .catch(err => console.log(err));
+// }
+
+async function getPostsAsync() {
+  try {
+    const data = await apiPixaby.fechPosts();
+
+    const currentPage = apiPixaby.page - 1;
+    apiPixaby.hits = data.totalHits;
+
+    createMarkup(data.hits);
+    observer.observe(refs.target);
+
+    if (currentPage === 1) {
+      if (!data.totalHits) {
+        return Notify.failure('No images found. Try again', {
           position: 'right-top',
-          timeout: 1000,
+          timeout: 1500,
         });
       }
-    })
-    .catch(err => console.log(err));
+      Notify.success(`Hooray! We found ${apiPixaby.hits} images.`, {
+        position: 'right-top',
+        timeout: 1000,
+      });
+    }
+  } catch {
+    if (apiPixaby.hits) {
+      return Notify.failure(
+        "We're sorry, you've reach the end of search resoults",
+        {
+          position: 'right-top',
+          timeout: 3000,
+        }
+      );
+    }
+  }
 }
 
 // render markup function
@@ -128,7 +164,8 @@ function clearGallery() {
 function onInfinitLoad(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      getPosts();
+      getPostsAsync();
+      // getPosts();
       observer.unobserve(refs.target);
     }
   });
